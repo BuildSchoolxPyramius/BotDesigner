@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Product App</title>
+</head>
+<body>
+
+    <div>
+        <h2>All Members</h2>
+        <div style="margin: 10px" id="tableBody">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>編號</th>
+                        <th>姓名</th>
+                        <th>地址</th>
+                        <th>電話</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in info">
+
+                        <td>
+                            <span>{{item.MemberID}}</span>
+                        </td>
+                        <td>
+                            <span>{{item.Name}}</span>
+                        </td>
+                        <td>
+                            <span>{{item.Address}}</span>
+                        </td>
+                        <td>
+                            <span>{{item.Cellphone}}</span>
+                        </td>
+                        <td>
+                            <button class="btn  btn-outline btn-primary btn-xs" v-on:click="edit(item)">編輯</button>
+                            <button class="btn  btn-outline btn-primary btn-xs" v-on:click="remove(item)">刪除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <button type="button" id="addmember" onclick="addmember()" class="btn btn-primary">新增</button>
+        </div>
+    </div>
+
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="MemberID" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <div id="Member">
+
+        </div>
+    </div>
+
+
+
+    <div id="instant">
+        <input type="text" v-model="message">
+        <div>${ message }</div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+
+        var uri = 'actionapi/member/all';
+        var info = [];
+
+        function DisplayByVue(vdata) {
+            new Vue({
+                el: '#tableBody',
+                data: { info: vdata },
+                methods: {
+                    remove: function (item) {
+                        if (confirm('確定要刪除?')) {
+                            Remove(item.MemberID);
+                        }
+                    },
+                    edit: function (item) {
+                        window.location.href = 'UpdateMemberInfo.html?id=' + item.MemberID;
+                    }
+                }
+
+            });
+        }
+
+        function DoingAPI(uri, data) {
+            $.ajax({
+                url: uri,
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                error: function (ex) {
+                    if (!fail) {
+                        _ExecuteAPIonError(ex);
+                    }
+                    else {
+                        fail(ex);
+                    }
+                }
+            })
+        }
+        function DoingAPI2(uri, data, success) {
+            $.ajax({
+                url: uri,
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (apiResult) {
+                    if (!success) {
+                        _ExecuteAPIonSuccess(apiResult);
+                    }
+                    else {
+                        success(apiResult);
+                    }
+                },
+                error: function (ex) {
+                    if (!fail) {
+                        _ExecuteAPIonError(ex);
+                    }
+                    else {
+                        fail(ex);
+                    }
+                }
+            })
+        }
+
+      
+
+        function Remove(id) {
+            console.log("delete", id);
+            DoingAPI('actionapi/member/delete/' + id, id);
+            location.href = 'MembersInfo.html';
+        }
+        
+
+
+        function find() {
+            var id = $('#MemberID').val();
+            DoingAPI2('actionapi/member/no/' + id, id, function (result) {
+                jdata = result;
+                console.log('jdata', jdata);
+                $('#Member').html("<a> id = " + jdata.MemberID + " , name = " + jdata.Name + " , address is : " + jdata.Address + "</a>")
+            });
+
+            
+        }
+
+        function GetAllData() {
+            axios.post("actionapi/member/all")
+                .then(function (response) {
+                    info = response.data.Members;
+                    console.log(info);
+                    DisplayByVue(info); // 透過Vue顯示
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errors.push(error);
+                })
+        }
+
+        function addmember() {
+            location.href = 'createmember.html';
+        }
+
+
+        $(document).ready(function () {
+
+            
+            GetAllData();
+
+            var vm = new Vue({
+                el: '#instant',
+                delimiters: ['${', '}'],
+                data: {
+                    message: 'Hello World!',
+                }
+            });
+
+
+  
+
+
+
+            // you can invoke methods in JavaScript too
+            //example2.greet() // => 'Hello Vue.js!'
+
+
+
+
+        });
+
+
+
+
+    </script>
+</body>
+</html>

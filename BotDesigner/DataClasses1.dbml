@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="E-Commerce" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=KUODAVID;Initial Catalog=E-Commerce;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="E_CommerceConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Members" Member="Members">
+    <Type Name="Members">
+      <Column Name="MemberID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Birthday" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CreditCard" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Account" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Career" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FbId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FbEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="GoogleId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Gmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Salt" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Members_Orders" Member="Orders" ThisKey="MemberID" OtherKey="MemberID" Type="Orders" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Orders">
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MemberID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cart" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ShipPlace" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Payway" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="Members_Orders" Member="Members" ThisKey="MemberID" OtherKey="MemberID" Type="Members" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

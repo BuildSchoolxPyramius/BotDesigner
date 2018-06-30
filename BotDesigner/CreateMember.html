@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="example-2">
+
+        姓名:
+        <input type="text" v-model="name" />
+        地址:
+        <input type="text" v-model="address" />
+        電話:
+        <input type="text" v-model="Cellphone" />
+
+
+        <!-- `greet` is the name of a method defined below -->
+        <button v-on:click="greeet">Greet</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var uri = 'actionapi/member/all';
+        //執行完後的動作
+        function DoingAPI(uri, data) {
+            $.ajax({
+                url: uri,
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data)
+
+            })
+        }
+
+
+
+        $(document).ready(function () {
+
+            var jdata = { Name: "", Address: "", Cellphone: "" };
+
+
+            function GetJsonData(name, address, Cellphone) {
+                jdata.Name = name,
+                    jdata.Address = address,
+                    jdata.Cellphone = Cellphone
+            }
+
+            var example2 = new Vue({
+                el: '#example-2',
+                data() {
+                    return {
+                        name: '',
+                        address: '',
+                        Cellphone: ''
+                    }
+
+
+                },
+                // define methods under the `methods` object
+                methods: {
+                    greeet: function (event) {
+                        GetJsonData(this.name, this.address, this.Cellphone);
+                        // `event` is the native DOM event
+                        if (event) {
+                            DoingAPI('actionapi/member/create', jdata);
+
+                        }
+                    }
+                }
+            })
+
+
+        })
+
+
+    </script>
+</body>
+</html>

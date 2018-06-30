@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerryProjectCRUDwithAJAX", "BotDesigner\TerryProjectCRUDwithAJAX.csproj", "{4DA79CE6-57E8-4BFB-BA6E-9225850E18E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{3F412652-40D1-4BAD-A165-2C3F047447C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DA79CE6-57E8-4BFB-BA6E-9225850E18E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DA79CE6-57E8-4BFB-BA6E-9225850E18E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DA79CE6-57E8-4BFB-BA6E-9225850E18E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DA79CE6-57E8-4BFB-BA6E-9225850E18E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F412652-40D1-4BAD-A165-2C3F047447C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F412652-40D1-4BAD-A165-2C3F047447C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F412652-40D1-4BAD-A165-2C3F047447C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F412652-40D1-4BAD-A165-2C3F047447C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C20CE73D-458B-4005-BB27-59E5C3695744}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+	EndGlobalSection
+EndGlobal
