@@ -3,20 +3,72 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+
+    <style>
+        body{
+            font-family:'Microsoft JhengHei UI';
+        }
+        .container {
+            position: absolute;
+            width:100%;
+            height:100%;
+            display:flex;
+        }
+        #toolbox {
+            position: absolute;
+            height: 100%;
+            width: 20%;
+            left:0%;
+            background-color:#606060;
+        }
+        #create-box{
+            width: 200px;
+            height: 60px;
+        }
+        #KnowlegeDesign {
+            position: absolute;
+            height: 100%;
+            width: 70%;
+            left: 20%;
+            background-color: #909090;
+        }
+        .box {
+            position: absolute;
+            min-width: 300px;
+            min-height: 60px;
+        }
+        #activities {
+            position: absolute;
+            height: 100%;
+            width: 10%;
+            left: 90%;
+            background-color: #808080;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div id="toolbox">
+            <button id="create-box">新增</button>
+        </div>
+        <div id="KnowlegeDesign">
+            <div id="LineBotBox" class="box">
+            </div>
+        </div>
+        <div id="activities">
 
-    <div id="toolbox">
-
+        </div>
     </div>
-    <div id="Knowlege">
-
-    </div>
-    <div id="activities">
-
-    </div>
-
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var boxcount = 0;
+
+        $(function(){
+            $('#create-box').on('click', function () {
+
+            });
+        });
+    </script>
 </body>
 </html>
