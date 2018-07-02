@@ -33,9 +33,20 @@
             background-color: #909090;
         }
         .box {
-            position: absolute;
-            min-width: 300px;
+            position: relative;
+            margin:0px auto;
+            border: solid 2px #202020;
+            width: 200px;
             min-height: 60px;
+            background-color: cornflowerblue;
+        }
+        .line {
+            position: relative;
+            position: relative;
+            margin: 0px auto;
+            border:2px solid #202020;
+            height:20px;
+            width:0;
         }
         #activities {
             position: absolute;
@@ -53,7 +64,9 @@
         </div>
         <div id="KnowlegeDesign">
             <div id="LineBotBox" class="box">
+                this is number 1
             </div>
+
         </div>
         <div id="activities">
 
@@ -62,13 +75,26 @@
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
     <script>
-        var boxcount = 0;
+        var boxcount = 1;
+        var ContainerWith;
+        var ContainerHeight;
+        var BoxHeight;
+        var BoxWidth;
+        var DistanceHeight = 200;
+
 
         $(function(){
             $('#create-box').on('click', function () {
-
+                CreateNewBox();
             });
         });
+
+        function CreateNewBox() {
+            boxcount = boxcount + 1;
+            console.log('okokok');
+            $('#KnowlegeDesign').append('<div class="line"></div>');
+            $('#KnowlegeDesign').append('<div class="box"> this is number ' + boxcount + ' </div>');
+        };
     </script>
 </body>
 </html>
