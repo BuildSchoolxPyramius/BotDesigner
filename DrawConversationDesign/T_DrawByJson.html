@@ -5,54 +5,69 @@
     <title></title>
 
     <style>
-        body{
-            font-family:'Microsoft JhengHei UI';
+        body {
+            font-family: 'Microsoft JhengHei UI';
         }
+
         .container {
             position: absolute;
-            width:100%;
-            height:100%;
-            display:flex;
+            width: 100%;
+            height: 100%;
+            display: flex;
         }
+
         #toolbox {
             position: absolute;
             height: 100%;
-            width: 20%;
-            left:0%;
-            background-color:#606060;
+            width: 15%;
+            left: 0%;
+            background-color: #606060;
         }
-        #create-box{
-            width: 200px;
+
+        #create-box {
+            width: 150px;
             height: 60px;
         }
+
+        #save {
+            position: absolute;
+            margin-top: calc(100% - 60px);
+            left: 45%;
+            width: 100px;
+            height: 50px;
+        }
+
         #KnowlegeDesign {
             position: absolute;
             height: 100%;
-            width: 70%;
-            left: 20%;
+            width: 60%;
+            left: 15%;
             background-color: #909090;
         }
+
         .box {
             position: relative;
-            margin:0px auto;
+            margin: 0px auto;
             border: solid 2px #202020;
             width: 200px;
             min-height: 60px;
             background-color: cornflowerblue;
         }
+
         .line {
             position: relative;
             position: relative;
             margin: 0px auto;
-            border:2px solid #202020;
-            height:20px;
-            width:0;
+            border: 2px solid #202020;
+            height: 20px;
+            width: 0;
         }
-        #activities {
+
+        #attributes {
             position: absolute;
             height: 100%;
-            width: 10%;
-            left: 90%;
+            width: 26%;
+            left: 74%;
             background-color: #808080;
         }
     </style>
@@ -61,15 +76,16 @@
     <div class="container">
         <div id="toolbox">
             <button id="create-box">新增</button>
+            <button id="save">儲存</button>
         </div>
         <div id="KnowlegeDesign">
-            <div id="LineBotBox" class="box">
-                this is number 1
+            <div id="Bot" class="box">
+                Bot
             </div>
 
         </div>
-        <div id="activities">
-
+        <div id="attributes">
+            <ul id="list"></ul>
         </div>
     </div>
 
@@ -81,20 +97,71 @@
         var BoxHeight;
         var BoxWidth;
         var DistanceHeight = 200;
+        var BoxElemets = [];
+
+        var J_Data = { "DataFields": null, "Activities": [{ "KBID": "xxxxx-xx-xxxxxxxxx-xxxx-xxxx", "EndpointKey": "xxxxx-xxxx-xxxxxx-xxxxx-xxxxx", "ID": 1, "Name": "QnAService1", "Type": "QnAServiceActivity", "PrecedingRule": null, "Tasks": null }, { "ResponseMessage": "你好", "ID": 2, "Name": "DirectResponse1", "Type": "DirectResponseActivity", "PrecedingRule": null, "Tasks": null }] };
+        console.log('J_Data', J_Data);
 
 
-        $(function(){
+        $(function () {
+
+            LoadJsonData();
+
             $('#create-box').on('click', function () {
                 CreateNewBox();
             });
+
+            $('#save').on('click', function () {
+                ConvertToJson();
+            });
+
         });
 
         function CreateNewBox() {
             boxcount = boxcount + 1;
-            console.log('okokok');
             $('#KnowlegeDesign').append('<div class="line"></div>');
-            $('#KnowlegeDesign').append('<div class="box"> this is number ' + boxcount + ' </div>');
+            $('#KnowlegeDesign').append('<div class="box"> this is number ' + boxcount + ' </div> ');
         };
+
+        function CreateNewBoxVithValue(name , list) {
+            boxcount = boxcount + 1;
+            $('#KnowlegeDesign').append('<div class="line"></div>');
+            $('#KnowlegeDesign').append('<div class="box"> ' + name + '  </div> ');
+        };
+
+        function ConvertToJson() {
+            BoxElemets = $('.box').each(function () { });
+            console.log(BoxElemets);
+            for (var i = 0; i < BoxElemets.length; i++) {
+                console.log(i);
+                if (BoxElemets[i].className == 'id') {
+                    var num = BoxElemets[i].innerText;
+                    console.log('number ' + i + '\'s ID : ' + num);
+                };
+
+            }
+
+        }
+
+        function LoadJsonData() {
+            //拆解Json資料
+            console.log('load');
+            for (var i = 0; i < J_Data.Activities.length; i++) {
+                //console.log('Key : ', Object.keys(J_Data.Activities[i]));
+                //console.log('Values : ', Object.values(J_Data.Activities[i]));
+                var Keys = Object.keys(J_Data.Activities[i]);
+                var Values = Object.values(J_Data.Activities[i]);
+                CreateNewBoxVithValue(J_Data.Activities[i].Name);
+
+                for (var j = 0; j < Keys.length; j++) {
+                    console.log('Key & Value is : ', Keys[j], Values[j]);
+                    
+                    $('#list').append('<li> ' + Keys[j] + ' : ' + Values[i] + ' </li>');
+
+                }
+            }
+        }
+
     </script>
 </body>
 </html>
