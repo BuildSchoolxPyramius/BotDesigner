@@ -107,6 +107,12 @@
     <Folder Include="Models\" />
     <Folder Include="src\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BotDesigner\TerryProjectCRUDwithAJAX.csproj">
+      <Project>{4da79ce6-57e8-4bfb-ba6e-9225850e18e3}</Project>
+      <Name>TerryProjectCRUDwithAJAX</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

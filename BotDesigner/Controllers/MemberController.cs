@@ -21,7 +21,7 @@ namespace BotDesigner.Controllers
             var T_Members = DB.Members;
             foreach (var item in T_Members)
             {
-                List_Members.Add(new Member { MemberID = item.MemberID, Address = item.Address, Name = item.Name , Cellphone = item.Phone});
+                List_Members.Add(new Member { MemberID = item.MemberID, Address = item.Address, Name = item.Name , Cellphone = item.Phone , Json = item.JsonData});
             }
             return List_Members;
         }
@@ -97,6 +97,16 @@ namespace BotDesigner.Controllers
             DB.SubmitChanges();
 
             return Ok();
+        }
+
+        [ActionName("GetJsonData")]
+        [HttpPost]
+        public JObject GetJsonData()
+        {
+            DataClasses1DataContext DB = new DataClasses1DataContext();
+            var Member = GetAllMembersInfo().FirstOrDefault((p) => p.MemberID == 1);
+            JObject json = JObject.Parse(Member.Json);
+            return json;
         }
 
         

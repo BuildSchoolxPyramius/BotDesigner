@@ -33,9 +33,6 @@ namespace BotDesigner
     partial void InsertMembers(Members instance);
     partial void UpdateMembers(Members instance);
     partial void DeleteMembers(Members instance);
-    partial void InsertOrders(Orders instance);
-    partial void UpdateOrders(Orders instance);
-    partial void DeleteOrders(Orders instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -73,14 +70,6 @@ namespace BotDesigner
 			get
 			{
 				return this.GetTable<Members>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Orders> Orders
-		{
-			get
-			{
-				return this.GetTable<Orders>();
 			}
 		}
 	}
@@ -121,7 +110,7 @@ namespace BotDesigner
 		
 		private string _Salt;
 		
-		private EntitySet<Orders> _Orders;
+		private string _JsonData;
 		
     #region 擴充性方法定義
     partial void OnLoaded();
@@ -157,11 +146,12 @@ namespace BotDesigner
     partial void OnGmailChanged();
     partial void OnSaltChanging(string value);
     partial void OnSaltChanged();
+    partial void OnJsonDataChanging(string value);
+    partial void OnJsonDataChanged();
     #endregion
 		
 		public Members()
 		{
-			this._Orders = new EntitySet<Orders>(new Action<Orders>(this.attach_Orders), new Action<Orders>(this.detach_Orders));
 			OnCreated();
 		}
 		
@@ -465,274 +455,22 @@ namespace BotDesigner
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Members_Orders", Storage="_Orders", ThisKey="MemberID", OtherKey="MemberID")]
-		public EntitySet<Orders> Orders
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JsonData", DbType="VarChar(MAX)")]
+		public string JsonData
 		{
 			get
 			{
-				return this._Orders;
+				return this._JsonData;
 			}
 			set
 			{
-				this._Orders.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Orders(Orders entity)
-		{
-			this.SendPropertyChanging();
-			entity.Members = this;
-		}
-		
-		private void detach_Orders(Orders entity)
-		{
-			this.SendPropertyChanging();
-			entity.Members = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Orders")]
-	public partial class Orders : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _OrderID;
-		
-		private int _MemberID;
-		
-		private int _Cart;
-		
-		private System.Nullable<int> _Pay;
-		
-		private System.Nullable<System.DateTime> _Time;
-		
-		private string _ShipPlace;
-		
-		private string _Payway;
-		
-		private EntityRef<Members> _Members;
-		
-    #region 擴充性方法定義
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnOrderIDChanging(int value);
-    partial void OnOrderIDChanged();
-    partial void OnMemberIDChanging(int value);
-    partial void OnMemberIDChanged();
-    partial void OnCartChanging(int value);
-    partial void OnCartChanged();
-    partial void OnPayChanging(System.Nullable<int> value);
-    partial void OnPayChanged();
-    partial void OnTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnTimeChanged();
-    partial void OnShipPlaceChanging(string value);
-    partial void OnShipPlaceChanged();
-    partial void OnPaywayChanging(string value);
-    partial void OnPaywayChanged();
-    #endregion
-		
-		public Orders()
-		{
-			this._Members = default(EntityRef<Members>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int OrderID
-		{
-			get
-			{
-				return this._OrderID;
-			}
-			set
-			{
-				if ((this._OrderID != value))
+				if ((this._JsonData != value))
 				{
-					this.OnOrderIDChanging(value);
+					this.OnJsonDataChanging(value);
 					this.SendPropertyChanging();
-					this._OrderID = value;
-					this.SendPropertyChanged("OrderID");
-					this.OnOrderIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MemberID", DbType="Int NOT NULL")]
-		public int MemberID
-		{
-			get
-			{
-				return this._MemberID;
-			}
-			set
-			{
-				if ((this._MemberID != value))
-				{
-					if (this._Members.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMemberIDChanging(value);
-					this.SendPropertyChanging();
-					this._MemberID = value;
-					this.SendPropertyChanged("MemberID");
-					this.OnMemberIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cart", DbType="Int NOT NULL")]
-		public int Cart
-		{
-			get
-			{
-				return this._Cart;
-			}
-			set
-			{
-				if ((this._Cart != value))
-				{
-					this.OnCartChanging(value);
-					this.SendPropertyChanging();
-					this._Cart = value;
-					this.SendPropertyChanged("Cart");
-					this.OnCartChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pay", DbType="Int")]
-		public System.Nullable<int> Pay
-		{
-			get
-			{
-				return this._Pay;
-			}
-			set
-			{
-				if ((this._Pay != value))
-				{
-					this.OnPayChanging(value);
-					this.SendPropertyChanging();
-					this._Pay = value;
-					this.SendPropertyChanged("Pay");
-					this.OnPayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Time", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Time
-		{
-			get
-			{
-				return this._Time;
-			}
-			set
-			{
-				if ((this._Time != value))
-				{
-					this.OnTimeChanging(value);
-					this.SendPropertyChanging();
-					this._Time = value;
-					this.SendPropertyChanged("Time");
-					this.OnTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipPlace", DbType="NVarChar(50)")]
-		public string ShipPlace
-		{
-			get
-			{
-				return this._ShipPlace;
-			}
-			set
-			{
-				if ((this._ShipPlace != value))
-				{
-					this.OnShipPlaceChanging(value);
-					this.SendPropertyChanging();
-					this._ShipPlace = value;
-					this.SendPropertyChanged("ShipPlace");
-					this.OnShipPlaceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Payway", DbType="NVarChar(10)")]
-		public string Payway
-		{
-			get
-			{
-				return this._Payway;
-			}
-			set
-			{
-				if ((this._Payway != value))
-				{
-					this.OnPaywayChanging(value);
-					this.SendPropertyChanging();
-					this._Payway = value;
-					this.SendPropertyChanged("Payway");
-					this.OnPaywayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Members_Orders", Storage="_Members", ThisKey="MemberID", OtherKey="MemberID", IsForeignKey=true)]
-		public Members Members
-		{
-			get
-			{
-				return this._Members.Entity;
-			}
-			set
-			{
-				Members previousValue = this._Members.Entity;
-				if (((previousValue != value) 
-							|| (this._Members.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Members.Entity = null;
-						previousValue.Orders.Remove(this);
-					}
-					this._Members.Entity = value;
-					if ((value != null))
-					{
-						value.Orders.Add(this);
-						this._MemberID = value.MemberID;
-					}
-					else
-					{
-						this._MemberID = default(int);
-					}
-					this.SendPropertyChanged("Members");
+					this._JsonData = value;
+					this.SendPropertyChanged("JsonData");
+					this.OnJsonDataChanged();
 				}
 			}
 		}
