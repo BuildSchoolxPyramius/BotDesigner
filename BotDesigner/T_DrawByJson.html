@@ -102,7 +102,6 @@
         $(function () {
             GetJsonData();
 
-
             $('#create-box').on('click', function () {
                 CreateNewBox();
             });
@@ -111,36 +110,21 @@
                 ConvertToJson();
             });
 
+
         });
 
-        function CreateNewBox() {
-            boxcount = boxcount + 1;
-            var NowID = J_Data.Activities[J_Data.Activities.length - 1].ID + 1; //取得現在最大ID + 1
-            var newjson = { "ID": NowID, "Name": "newitem" + NowID , "Type": "test" };
-            J_Data.Activities.push(newjson);
-            console.log(J_Data);
-            $('#KnowlegeDesign').append('<div class="line"></div>');
-            $('#KnowlegeDesign').append('<div class="box"> newitem ' + NowID + ' </div> ');
-        };
-
-        function CreateNewBoxWithValue(name, list) {
-            boxcount = boxcount + 1;
-            $('#KnowlegeDesign').append('<div class="line"></div>');
-            $('#KnowlegeDesign').append('<div class="box"> ' + name + '  </div> ');
-        };
-
-        function ConvertToJson() {
-            BoxElemets = $('.box').each(function () { });
-            console.log(BoxElemets);
-            for (var i = 0; i < BoxElemets.length; i++) {
-                console.log(i);
-                if (BoxElemets[i].className != 'id') {
-                    var num = BoxElemets[i].innerText;
-                    console.log('number ' + i + '\'s ID : ' + num);
-                };
-
-            }
-
+        function GetJsonData() {
+            var uri = 'actionapi/member/GetJsonData';
+            axios.post(uri)
+                .then(function (response) {
+                    console.log('data from api is : ', response.data);
+                    J_Data = response.data;
+                    LoadJsonData();
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errors.push(error);
+                })
         }
 
         function LoadJsonData() {
@@ -162,20 +146,31 @@
         }
 
 
-        function GetJsonData() {
-            var uri = 'actionapi/member/GetJsonData';
-            axios.post(uri)
-                .then(function (response) {
-                    console.log('data from api is : ', response.data);
-                    J_Data = response.data;
-                    LoadJsonData();
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.errors.push(error);
-                })
-        }
+        function CreateNewBox() {
+            boxcount = boxcount + 1;
+            var NowID = J_Data.Activities[J_Data.Activities.length - 1].ID + 1; //取得現在最大ID + 1
+            var newjson = { "ID": NowID, "Name": "newitem" + NowID , "Type": "test" };
+            J_Data.Activities.push(newjson);
+            $('#KnowlegeDesign').append('<div class="line"></div>');
+            $('#KnowlegeDesign').append('<div class="box"> newitem ' + NowID + ' </div> ');
+        };
 
+        function CreateNewBoxWithValue(name, list) {
+            boxcount = boxcount + 1;
+            $('#KnowlegeDesign').append('<div class="line"></div>');
+            $('#KnowlegeDesign').append('<div class="box"> ' + name + '  </div> ');
+        };
+
+        function ConvertToJson() {
+            BoxElemets = $('.box').each(function () { });
+            for (var i = 0; i < BoxElemets.length; i++) {
+                if (BoxElemets[i].className != 'id') {
+                    var num = BoxElemets[i].innerText;
+                    
+                };
+            }
+            console.log(J_Data);
+        }
 
         function DoingAPI(uri, data, success) {
             $.ajax({

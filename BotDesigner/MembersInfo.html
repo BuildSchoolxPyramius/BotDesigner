@@ -113,7 +113,7 @@
                 data: JSON.stringify(data),
                 success: function (apiResult) {
                     if (!success) {
-                        _ExecuteAPIonSuccess(apiResult);
+                        console.log('Fail api request : ', apiResult);
                     }
                     else {
                         success(apiResult);
@@ -143,12 +143,11 @@
         function find() {
             var id = $('#MemberID').val();
             DoingAPI2('actionapi/member/no/' + id, id, function (result) {
-                jdata = result;
+                jda
+                ta = result;
                 console.log('jdata', jdata);
                 $('#Member').html("<a> id = " + jdata.MemberID + " , name = " + jdata.Name + " , address is : " + jdata.Address + "</a>")
             });
-
-            
         }
 
         function GetAllData() {
